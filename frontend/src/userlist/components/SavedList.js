@@ -7,12 +7,7 @@ let validArray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
 const SavedList = (props) => {
 
     let list = [];
-    console.log('key: ' + props.list.key);
-    console.log('data: ' + props.list.data);
     for (let i=0; i<props.list.data.length; i++) {
-        console.log('data.text: ' + props.list.data[i].text);
-        console.log('data.description: ' + props.list.data[i].description);
-        console.log('data.importance: ' + props.list.data[i].importance);
         list.push({
             text: props.list.data[i].text,
             description: props.list.data[i].description,
@@ -20,19 +15,27 @@ const SavedList = (props) => {
         })
     }
 
+    const markComplete = (unitNo) => {
+        // axios
+        // .put(`https://userlists-663b8-default-rtdb.firebaseio.com/${props.user}/${props.list.key}/${unitNo}`, {
+        //     text: 'Completed',
+        //     description: 'This is done now',
+        //     importance: 0
+        // })
+        // .then(res => console.log(res))
+        // .catch(err => console.error(err));
+        console.log(unitNo)
+    }
+
     const deleteList = async () => {
         let userURL = `https://userlists-663b8-default-rtdb.firebaseio.com/${props.user}/${props.list.key}`
         console.log('fetching from ' + userURL);
-        await axios.delete(userURL);
-            // { 
-            //   method: "DELETE",
-            //   headers: new Headers({
-            //     'content-type': 'application/json',
-            //     'Access-Control-Allow-Origin': '*',
-            //     "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
-            //     "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
-            //   }),
-            // });
+
+        await axios.delete(userURL)
+        .then(() => {
+            props.reloadPage();
+        })
+        .catch(err => console.error(err));
     }
 
     const makeKey = (text) => {
@@ -46,15 +49,22 @@ const SavedList = (props) => {
         }
         let newString = textArray.join('') + '-' + Math.floor(Math.random() * 1000).toString();
         
-        console.log('returning ' + newString);
-        
         return newString;
     }
+
+
     
     return (
         <section className='savedList'>
             {list.map((item) => (
-                <SavedListItem text={item.text} description={item.description} importance={item.importance} key={makeKey(item.description)}/>
+                <SavedListItem 
+                unitNo={list.indexOf(item)} 
+                text={item.text} 
+                description={item.description} 
+                importance={item.importance} 
+                key={makeKey(item.description)}
+                markComplete={(unitNo) => markComplete(unitNo)}
+                />
             ))}
             <button onClick={() => deleteList()}>Delete List</button>
         </section>

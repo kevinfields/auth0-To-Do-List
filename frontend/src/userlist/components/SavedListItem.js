@@ -2,8 +2,6 @@ import React from 'react'
 
 const SavedListItem = (props) => {
 
-    console.log('returning saved list item, key: ' + props);
-
     let styling = 'listMain' + props.importance.toString();
 
     return (
@@ -12,6 +10,9 @@ const SavedListItem = (props) => {
            { props.importance !== 0 ? <div>
             <p className='savedListDescription'>{props.description}</p>
             <p className='savedListImportance'>Importance Level: {props.importance}</p>
+            <button className='complete-button' onClick={() => props.markComplete(props.unitNo)}>
+                Complete
+            </button>
             </div> : null}
         </div>
     )

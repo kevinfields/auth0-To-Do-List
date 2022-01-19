@@ -13,8 +13,6 @@ export default function sortList(list, type) {
             importanceArray[i] = list[i].importance + ' ' + list[i].text;
         }
 
-        console.log('titleArray: ' + titleArray);
-        console.log('importanceArray: ' + importanceArray);
 
         switch (type) {
             case '0':
@@ -28,7 +26,7 @@ export default function sortList(list, type) {
                     let titleIndex = titleArray.indexOf(list[i].text);
                     sortedArray[titleIndex] = list[i];
                 }
-                console.log(' alphabetically sorted sortedArray: ' + sortedArray);
+                
                 break;
             case '2':
                 //importance high to low
@@ -39,7 +37,6 @@ export default function sortList(list, type) {
                     
                 }
                 sortedArray = sortedArray.reverse();
-                console.log('importance-sorted sortedArray: ' + sortedArray);
                 break;
             case '3':
                 //oldest first
@@ -53,7 +50,7 @@ export default function sortList(list, type) {
                     let titleIndex = titleArray.indexOf(list[i].text);
                     sortedArray[titleIndex] = list[i];
                 }
-                console.log('reverse-alphabetically sorted sortedArray: ' + sortedArray);
+                
                 sortedArray = sortedArray.reverse();
                 break;
             case '5':
@@ -64,14 +61,12 @@ export default function sortList(list, type) {
                     sortedArray[importanceIndex] = list[i];
                     
                 }
-                console.log('reverse-importance-sorted sortedArray: ' + sortedArray);
                 break;
             default:
                 console.log('tf');
                 sortedArray = list;
                 break;
         }
-        console.log('sortedArray: ' + sortedArray);
         return sortedArray;
 
     } else {

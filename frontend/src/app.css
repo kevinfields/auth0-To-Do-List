@@ -233,9 +233,10 @@
 
 
 #listTitle {
-  text-align: center;
+  text-align: left;
   position: relative;
   top: 10px;
+  margin-bottom: 15px;
 }
 
 /* #listNameInput {

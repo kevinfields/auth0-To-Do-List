@@ -21,7 +21,9 @@
   */
  
  app.use(helmet());
- app.use(cors({ origin: clientOrigins }));
+ app.use(cors({ 
+   origin: clientOrigins 
+  }));
  app.use(express.json());
  
  app.use("/api", apiRouter);

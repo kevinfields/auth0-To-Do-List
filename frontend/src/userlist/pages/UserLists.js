@@ -6,11 +6,13 @@ import SavedList from '../components/SavedList';
 
 const UserLists = () => {
 
+    const {user} = useAuth0();
+    const {sub} = user;
+
     const [loadedLists, setLoadedLists] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const {user} = useAuth0();
-    const {/*nickname, email,*/ sub} = user;
+    
 
     //give user a unique id token
     const accNum = sub.substring(6, sub.length)
@@ -24,8 +26,6 @@ const UserLists = () => {
         let userData = result.data
         const lists = [];
         for (const key in userData){ 
-            console.log('key: ' + key)
-            console.log('data here: ' + userData[key])
             const list = {
                 key: key,
                 id: key,
@@ -35,11 +35,15 @@ const UserLists = () => {
         };
         setLoadedLists(lists);
         setLoading(false);
-
-        
     }
 
-    //load lists on first page load
+    // const removeList = (listId) => {
+    //     console.log('trying to remove list ' + listId)
+    //     setLoadedLists(loadedLists.filter(list => list.id !== listId));
+    //     setLoading(false);
+    // }
+
+    //display lists on first page load
     useEffect(() => {
         getLists()
         // eslint-disable-next-line
@@ -52,7 +56,13 @@ const UserLists = () => {
             <section className='savedLists'>
             {loading ? <p>Loading ...</p> : null}
             {loadedLists.length > 0 ? loadedLists.map((list) => (
-                <SavedList list={list} user={accNum} key={list.id} />
+                <SavedList 
+                list={list} 
+                user={accNum} 
+                key={list.id}
+                reloadPage={() => getLists()}
+                // removeList={() => removeList(list.id)} 
+                />
             )) : !loading ? <h3>You have no lists yet. Go to the Create List tab to create one.</h3> : null}
             </section>
         </div>

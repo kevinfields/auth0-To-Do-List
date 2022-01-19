@@ -117,9 +117,6 @@ const CreateList = (props) => {
     }
 
     const viewItem = (item) => {
-        console.log('item text: ' + item.text);
-        console.log('item description: ' + item.description)
-        console.log('item importance: ' + item.importance)
         setView({
             text: item.text,
             description: item.description,
@@ -140,12 +137,10 @@ const CreateList = (props) => {
     const saveList = async () => {
 
         addTitle();
-        console.log('list: ' + list);
         if (list.length < 2) {
             alert('Please add an item');
             return;
         }
-        console.log('accNum: ' + props.user);
         let fetchURL = `https://userlists-663b8-default-rtdb.firebaseio.com/${props.user}.json`
         console.log('fetchURL: ' + fetchURL);
         await fetch(fetchURL,
@@ -163,7 +158,6 @@ const CreateList = (props) => {
     }
 
     const listSorter = (sort) => {
-        console.log('list: ' + list)
         let newList = sortList(list, sort);
         setDisplayList(newList);
     }
