@@ -1,6 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import SavedListItem from './SavedListItem';
+import axios from 'axios';
+import { baseURL } from '../../shared/baseURL';
 
 let validArray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-'.split('');
 
@@ -16,22 +17,28 @@ const SavedList = (props) => {
     }
 
     const markComplete = (unitNo) => {
-        // axios
-        // .put(`https://userlists-663b8-default-rtdb.firebaseio.com/${props.user}/${props.list.key}/${unitNo}`, {
-        //     text: 'Completed',
-        //     description: 'This is done now',
-        //     importance: 0
-        // })
-        // .then(res => console.log(res))
-        // .catch(err => console.error(err));
+        axios
+        .put(`${baseURL}${props.user}/${props.list.key}/${unitNo}`, {
+            text: 'Completed',
+            description: 'This is done now',
+            importance: 0
+        })
+        .then(res => console.log(res))
+        .catch(err => console.error(err));
         console.log(unitNo)
     }
 
     const deleteList = async () => {
-        let userURL = `https://userlists-663b8-default-rtdb.firebaseio.com/${props.user}/${props.list.key}`
+        let userURL = `${baseURL}${props.user}/${props.list.key}`
         console.log('fetching from ' + userURL);
 
-        await axios.delete(userURL)
+        await axios.delete(userURL, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            credentials: 'same-origin'
+        })
         .then(() => {
             props.reloadPage();
         })

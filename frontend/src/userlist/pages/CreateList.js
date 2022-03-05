@@ -4,6 +4,7 @@ import sortList from '../functions/sortList';
 import ListItem from '../components/ListItem';
 import ItemViewer from '../components/ItemViewer';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { baseURL } from "../../shared/baseURL";
 
 const useFocus = () => {
 
@@ -141,7 +142,7 @@ const CreateList = (props) => {
             alert('Please add an item');
             return;
         }
-        let fetchURL = `https://userlists-663b8-default-rtdb.firebaseio.com/${props.user}.json`
+        let fetchURL = `${baseURL}${props.user}.json`
         console.log('fetchURL: ' + fetchURL);
         await fetch(fetchURL,
             {

@@ -9,14 +9,14 @@ const MainNav = () => {
 
   return (
   <div className="navbar-nav mr-auto">
-    <NavLink
+    {/* <NavLink
       to="/"
       exact
       className="nav-link"
       activeClassName="router-link-exact-active"
     >
     Home
-   </NavLink>
+   </NavLink> */}
     {/* <NavLink
       to="/external-api"
       exact
@@ -26,14 +26,6 @@ const MainNav = () => {
       External API
     </NavLink>  */}
     <NavLink
-      to="/create-list"
-      exact
-      className="nav-link"
-      activeClassName="router-link-exact-active"
-    >
-      Create List
-    </NavLink>
-    <NavLink
       to="/my-lists"
       exact
       className="nav-link"
@@ -41,6 +33,15 @@ const MainNav = () => {
     >
       My Lists
     </NavLink>
+    <NavLink
+      to="/create-list"
+      exact
+      className="nav-link"
+      activeClassName="router-link-exact-active"
+    >
+      Create List
+    </NavLink>
+    
     <NavLink
       to="/profile"
       exact

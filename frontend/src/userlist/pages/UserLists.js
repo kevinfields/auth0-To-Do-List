@@ -3,23 +3,49 @@ import { useState, useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from 'axios';
 import SavedList from '../components/SavedList';
+import { baseURL } from '../../shared/baseURL';
+
+// import {createInstance} from 'axios';
+
+// import firebase from 'firebase/app';
+// import 'firebase/firestore';
+// import 'firebase/auth';
+// import {useAuthState} from 'react-firebase-hooks/auth';
+// import {useCollectionData} from 'react-firebase-hooks/firestore';
+
+// firebase.initializeApp({
+//   apiKey: "AIzaSyAeIVrMPCCt1DqizKUlEpcTQiCj2KpvscQ",
+//   authDomain: "todolists-92585.firebaseapp.com",
+//   databaseURL: "https://todolists-92585-default-rtdb.firebaseio.com",
+//   projectId: "todolists-92585",
+//   storageBucket: "todolists-92585.appspot.com",
+//   messagingSenderId: "284118069420",
+//   appId: "1:284118069420:web:6858d50904a4cdc6a12f09"
+//   });
+
+//   const auth = firebase.auth();
+//   const firestore = firebase.firestore();
+  
+
+
 
 const UserLists = () => {
 
     const {user} = useAuth0();
-    const {sub} = user;
+    const {sub, email} = user;
 
     const [loadedLists, setLoadedLists] = useState([]);
     const [loading, setLoading] = useState(true);
 
     
 
-    //give user a unique id token
+    //give user a unique id token and get a name based on email
     const accNum = sub.substring(6, sub.length)
+    const emailName = email.split('@')[0];
 
     const getLists = async () => {
         
-        const userURL = 'https://userlists-663b8-default-rtdb.firebaseio.com/' + accNum + '.json';
+        const userURL = `${baseURL}${accNum}.json`;
 
         const result = await axios(userURL);
         
@@ -51,7 +77,7 @@ const UserLists = () => {
 
     return (
         <div>
-            <h2>My Lists</h2>
+            <h2>My Lists - {emailName}</h2>
             <p>User ID: {accNum}</p>
             <section className='savedLists'>
             {loading ? <p>Loading ...</p> : null}
