@@ -7,27 +7,6 @@ import { baseURL } from '../../shared/baseURL';
 
 // import {createInstance} from 'axios';
 
-// import firebase from 'firebase/app';
-// import 'firebase/firestore';
-// import 'firebase/auth';
-// import {useAuthState} from 'react-firebase-hooks/auth';
-// import {useCollectionData} from 'react-firebase-hooks/firestore';
-
-// firebase.initializeApp({
-//   apiKey: "AIzaSyAeIVrMPCCt1DqizKUlEpcTQiCj2KpvscQ",
-//   authDomain: "todolists-92585.firebaseapp.com",
-//   databaseURL: "https://todolists-92585-default-rtdb.firebaseio.com",
-//   projectId: "todolists-92585",
-//   storageBucket: "todolists-92585.appspot.com",
-//   messagingSenderId: "284118069420",
-//   appId: "1:284118069420:web:6858d50904a4cdc6a12f09"
-//   });
-
-//   const auth = firebase.auth();
-//   const firestore = firebase.firestore();
-  
-
-
 
 const UserLists = () => {
 
@@ -54,7 +33,7 @@ const UserLists = () => {
         for (const key in userData){ 
             const list = {
                 key: key,
-                id: key,
+                id: lists.length,
                 data: userData[key]
             }
             lists.push(list);
@@ -63,11 +42,28 @@ const UserLists = () => {
         setLoading(false);
     }
 
-    // const removeList = (listId) => {
-    //     console.log('trying to remove list ' + listId)
-    //     setLoadedLists(loadedLists.filter(list => list.id !== listId));
-    //     setLoading(false);
-    // }
+    const removeList = (listId) => {
+        console.log('trying to remove list ' + listId)
+        setLoadedLists(loadedLists.filter(list => list.id !== listId));
+        setLoading(false);
+    }
+
+    const removeItem = (listId, itemId) => {
+
+        console.log('listId: ' + listId)
+        console.log('itemId, ' + itemId)
+
+        let list = loadedLists[listId];
+        console.log('list: ' + JSON.stringify(list))
+        list.data.splice(itemId, 1)
+        console.log('list.data: ' + JSON.stringify(list.data))
+        let listScreenshot = loadedLists;
+        console.log('updated list: ' + JSON.stringify(list));
+        listScreenshot.splice(listId, 1, list);
+        console.log('listScreenshot: ' + listScreenshot)
+        setLoadedLists([...listScreenshot]);
+
+    }
 
     //display lists on first page load
     useEffect(() => {
@@ -87,7 +83,8 @@ const UserLists = () => {
                 user={accNum} 
                 key={list.id}
                 reloadPage={() => getLists()}
-                // removeList={() => removeList(list.id)} 
+                removeList={() => removeList(list.id)} 
+                markComplete={(itemId) => removeItem(list.id, itemId)}
                 />
             )) : !loading ? <h3>You have no lists yet. Go to the Create List tab to create one.</h3> : null}
             </section>

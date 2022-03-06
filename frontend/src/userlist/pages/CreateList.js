@@ -126,11 +126,15 @@ const CreateList = (props) => {
     }
 
     const addTitle = () => {
+
+        if (list[0] && list[0].importance === 0) {
+            list.shift();
+        }
         list.unshift({
             text: title,
             description: '',
             importance: 0, 
-        })
+        });
     }
 
    

@@ -243,6 +243,22 @@
   
 } */
 
+
+.welcome-screen {
+  text-align: center;
+  position: fixed;
+  left: 20vw;
+  top: 20vh;
+  width: 60vw;
+  height: 60vh;
+}
+
+.welcome-login {
+  width: 10vw;
+  position: relative;
+  left: 25vw;
+}
+
 .savedList {
   position: relative;
   left: 300px;
